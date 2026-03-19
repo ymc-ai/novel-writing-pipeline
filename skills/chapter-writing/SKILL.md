@@ -22,6 +22,7 @@ description: |
 ```
 a) 使用 world-agent
    → 获取当前世界状态
+   → 获取上一章结尾情节点（previous_chapter_ending）**必须获取**
    → 获取活跃伏笔列表
    → 获取相关角色状态
 
@@ -42,11 +43,16 @@ c) 使用 quality-agent
 
 输入：
 - chapter_id
+- previous_chapter_ending（上一章结尾情节点）**必须使用**
 - outline（章纲）
 - world_context（世界状态）
 - character_status（角色状态）
 - active_threads（待触发伏笔）
 - rhetoric_stage（修辞阶段）
+
+要求：
+- 章节开头必须自然承接上一章结尾的情节
+- 不能跳跃或割裂，必须有情节上的连续性
 
 输出：
 - chapter_content
@@ -83,6 +89,7 @@ a) 保存章节到 data/chapters/chapter_{id}.md
 b) 使用 world-agent 更新状态
    → 更新 delta_log
    → 更新伏笔状态
+   → 更新 L1_Endings（记录本章结尾情节点）
 c) 更新 outline-agent 的章纲状态
 ```
 

@@ -36,6 +36,12 @@ description: 世界状态管理专家。维护 world.json、追踪伏笔、管�
 {
   "current_chapter": 45,
   "world_summary": {...},
+  "previous_chapter_ending": {
+    "chapter_id": 44,
+    "ending_point": "上一章结尾的关键情节点描述",
+    "ending_type": "cliffhanger|question|reversal",
+    "unresolved_plot_threads": ["未解决的情节线"]
+  },
   "active_threads": [...],
   "character_status": {
     "char_001": {"realm": "筑基期", "location": "青云山", ...},
@@ -77,6 +83,7 @@ description: 世界状态管理专家。维护 world.json、追踪伏笔、管�
 | 层级 | 内容 | 保留范围 | 更新频率 |
 |------|------|----------|----------|
 | L1 (近景) | 最近 5 章原生文本 | 完整细节 | 每章 |
+| L1_Endings (情节承接) | 最近 3 章结尾情节点 | 关键情节点 | 每章 |
 | L2 (中景) | 当前卷事件流摘要 | 关键情节 | 每 10 章 |
 | L3 (远景) | world.json 词条化历史 | 仅保留结果 | 每卷 |
 
@@ -137,7 +144,18 @@ description: 世界状态管理专家。维护 world.json、追踪伏笔、管�
   "constants": {"修炼境界": []},
   "variables": {"角色": {}, "势力": {}, "道具": {}},
   "delta_log": [],
-  "memory": {"L1": [], "L2": [], "L3": []}
+  "memory": {
+    "L1": [],
+    "L1_Endings": [
+      {
+        "chapter_id": 44,
+        "ending_point": "上一章结尾关键情节点",
+        "ending_type": "cliffhanger|question|reversal"
+      }
+    ],
+    "L2": [],
+    "L3": []
+  }
 }
 ```
 

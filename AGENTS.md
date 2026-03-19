@@ -49,13 +49,13 @@ Skill 定义"怎么做"，负责编排 Agent 协作流程。
 ### chapter-writing（单章创作流程）
 
 ```
-1. world-agent     → 获取世界状态
+1. world-agent     → 获取世界状态 + 上一章结尾情节点
 2. outline-agent   → 获取章纲
 3. quality-agent   → 获取质量要求
-4. chapter-agent  → 创作章节
+4. chapter-agent  → 创作章节（必须承接上一章结尾）
 5. plot-agent     → 校验一致性
 6. polish-agent   → 润色
-7. world-agent     → 更新状态
+7. world-agent     → 更新状态 + 记录本章结尾情节点
 ```
 
 ### quick-review（快速检查）
@@ -76,7 +76,14 @@ Skill 定义"怎么做"，负责编排 Agent 协作流程。
   "project": {"title": "", "genre": "", "target_chapters": 1000},
   "variables": {"角色": {}, "势力": {}, "道具": {}},
   "delta_log": [],
-  "memory": {"L1": [], "L2": [], "L3": []}
+  "memory": {
+    "L1": [],
+    "L1_Endings": [
+      {"chapter_id": 1, "ending_point": "上一章结尾情节点", "ending_type": "cliffhanger"}
+    ],
+    "L2": [],
+    "L3": []
+  }
 }
 ```
 
@@ -144,3 +151,4 @@ W < 20 → 可选回收
 5. **质量优先**：章节必须通过 quality-agent 检查
 6. **风格统一**：遵守修辞阶段规范
 7. **禁止越界**：Agent 不得调用同级 Agent 进行检查
+8. **章节衔接**：创作时必须承接上一章结尾情节点，不能跳跃或割裂
