@@ -41,24 +41,24 @@ description: |
 ## 阶段四：生成大纲
 
 ```
-4. 使用 outline-agent 生成大纲
+4. 使用 outline-writing skill 生成大纲
 
-   a) 生成总纲
+   a) outline-agent 生成总纲
       → 三幕结构（建置/对抗/解决）
       → 核心主题定义
       → 节奏规划
 
-   b) 生成卷纲
+   b) outline-agent 生成卷纲
       → 每卷50-100章
-      → 里程碑设置（每50章）
+      → 里程碑设置（每25章）
       → 伏笔分布规划
 
-   c) 批量生成章纲
-      → 完整章纲
+   c) outline-agent 批量生成章纲
+      → 完整章纲（每50章一批）
       → 伏笔植入计划
       → 钩子设计
 
-   d) 使用 world-agent 记录伏笔
+   d) world-agent 同步伏笔
       → 伏笔写入 data/threads/threads.json
       → 设置优先级和回收计划
 ```
