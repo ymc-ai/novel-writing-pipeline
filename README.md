@@ -1,72 +1,80 @@
 # Novel Writer Agent
 
-长篇小说创作系统，基于 Claude Code Agent Skills 架构。
+基于 AI Agent Skills 架构的长篇小说创作系统，通过专业化 Agent 协作创作 1000+ 章节长篇网络小说。
+
+## 核心目标
+
+- **信息熵增对抗**：三层记忆架构 + 世界状态管理
+- **叙事疲劳对抗**：节奏监控 + 语调约束
 
 ## 系统架构
 
 ```
-┌─────────────────────────────────────────────┐
-│                  Skill (工作流)               │
-│  novel-writing / chapter-writing / quick-review │
-└─────────────────────────────────────────────┘
-                    ↓ 调用
-┌─────────────────────────────────────────────┐
-│                 Agent (专家)                  │
-│  world | quality | chapter | character      │
-│  outline | plot | polish                     │
-└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│                       Skill (工作流)                  │
+│  novel-writing / chapter-writing / outline-writing  │
+│  quick-review                                       │
+└─────────────────────────────────────────────────────┘
+                         ↓ 调用
+┌─────────────────────────────────────────────────────┐
+│                      Agent (专家)                     │
+│  world | quality | chapter | character             │
+│  outline | plot | polish                            │
+└─────────────────────────────────────────────────────┘
 ```
 
-## Agent = 专家
+## Agent 职责
 
 | Agent | 职责 |
 |-------|------|
-| `world-agent` | 世界状态、伏笔、记忆 |
-| `quality-agent` | 节奏、语调、爽感 |
-| `chapter-agent` | 章节创作 |
-| `character-agent` | 角色设计 |
-| `outline-agent` | 大纲规划 |
-| `plot-agent` | 情节校验 |
-| `polish-agent` | 风格润色 |
+| `world-agent` | 世界状态、伏笔追踪、三层记忆 |
+| `quality-agent` | 节奏监控、语调约束、爽感管理 |
+| `chapter-agent` | 章节创作、场景规划、伏笔植入 |
+| `character-agent` | 角色档案、角色弧线设计 |
+| `outline-agent` | 总纲、卷纲、章纲规划 |
+| `plot-agent` | 世界一致性、伏笔合规校验 |
+| `polish-agent` | AI味消除、风格统一 |
 
-## Skill = 工作流
+## 快速开始
 
-| Skill | 用途 |
-|-------|------|
-| `novel-writing` | 完整创作流程 |
-| `chapter-writing` | 单章创作流程 |
-| `quick-review` | 快速检查 |
-
-## 目录结构
-
-```
-├── agents/           # Agent 定义
-│   ├── world-agent.md
-│   ├── quality-agent.md
-│   └── ...
-├── skills/           # Skill 定义
-│   ├── novel-writing/
-│   ├── chapter-writing/
-│   └── quick-review/
-├── data/             # 数据存储
-│   ├── world/
-│   ├── threads/
-│   ├── chapters/
-│   └── outline/
-└── README.md
-```
-
-## 使用方式
-
-### 加载 Skill
+### 创作小说
 ```
 /skill novel-writing
 ```
 
-### 创作流程
-
+### 创作章节
 ```
-用户请求 → Skill 编排 → Agent 执行 → 输出
+/skill chapter-writing
 ```
 
-详见 [AGENTS.md](./AGENTS.md)
+### 生成大纲
+```
+/skill outline-writing
+```
+
+### 检查章节
+```
+/skill quick-review
+```
+
+## 质量标准
+
+| 指标 | 标准 |
+|------|------|
+| 字数 | 2000-4000 字/章 |
+| 节奏 | Action_Density > 0.08 |
+| 伏笔跨度 | ≤ 150 章 |
+| 禁用词 | 零容忍 |
+
+## 修辞阶段
+
+| 章节 | 文风 | 示例 |
+|------|------|------|
+| 1-10 | 市井白话 | 这厮、瞅着 |
+| 11-50 | 江湖气息 | 好汉、在下 |
+| 51-200 | 史诗叙事 | 彼时、乃至 |
+| 200+ | 大道至简 | 极简白描 |
+
+---
+
+详细协作规范见 [AGENTS.md](./AGENTS.md)
