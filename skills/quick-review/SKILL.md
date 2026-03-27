@@ -5,8 +5,6 @@ description: |
   用户说"检查章节"、"质量报告"时使用。
 ---
 
----
-
 # 快速检查流程
 
 ## 输入
@@ -19,7 +17,7 @@ description: |
 ### Step 1: 加载章节
 
 ```
-使用 world-agent 加载：
+调用 subagent（world-agent）加载：
 → 章节内容
 → 世界状态
 → 伏笔状态
@@ -28,7 +26,7 @@ description: |
 ### Step 2: 质量检查
 
 ```
-使用 quality-agent：
+调用 subagent（quality-agent）：
 
 检测项：
 - 节奏模式
@@ -40,7 +38,7 @@ description: |
 ### Step 3: 一致性检查
 
 ```
-使用 plot-agent：
+调用 subagent（plot-agent）：
 
 检测项：
 - 世界一致性

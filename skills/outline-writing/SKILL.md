@@ -5,8 +5,6 @@ description: |
   用户说"生成大纲"、"规划大纲"、"写章纲"时使用。
 ---
 
----
-
 # 大纲生成流程
 
 ## 核心原则
@@ -23,17 +21,17 @@ description: |
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  第一循环：总纲生成（一次性）                                  │
-│  outline-agent → 世界状态 → 伏笔规划 → 输出总纲               │
+│  调用 subagent（outline-agent）→ 世界状态 → 伏笔规划 → 输出总纲 │
 └─────────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第二循环：卷纲生成（每卷一次）                                │
-│  outline-agent → 总纲读取 → 卷纲设计 → 输出卷纲               │
+│  调用 subagent（outline-agent）→ 总纲读取 → 卷纲设计 → 输出卷纲 │
 └─────────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第三循环：章纲生成（批量执行，每批5-10章）                    │
-│  outline-agent → 伏笔读取 → 章纲编写 → 质量检查 → 伏笔植入   │
+│  调用 subagent（outline-agent）→ 伏笔读取 → 章纲编写 → 质量检查 → 伏笔植入 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -44,12 +42,12 @@ description: |
 ### 流程步骤
 
 ```
-a) outline-agent     → 生成总纲框架
-b) world-agent       → 确认世界状态
-c) outline-agent     → 规划主线伏笔（≥10个）
-d) outline-agent     → 定义节奏分布
-e) outline-agent     → 输出完整总纲
-f) world-agent       → 同步主线伏笔到 threads.json
+a) 调用 subagent（outline-agent）     → 生成总纲框架
+b) 调用 subagent（world-agent）       → 确认世界状态
+c) 调用 subagent（outline-agent）     → 规划主线伏笔（≥10个）
+d) 调用 subagent（outline-agent）     → 定义节奏分布
+e) 调用 subagent（outline-agent）     → 输出完整总纲
+f) 调用 subagent（world-agent）       → 同步主线伏笔到 threads.json
 ```
 
 ### 总纲必须包含
@@ -93,13 +91,13 @@ pacing_targets: {}            # 节奏分布
 ### 流程步骤
 
 ```
-a) outline-agent     → 获取总纲中的本卷规划
-b) outline-agent     → 确定本卷主题和范围
-c) outline-agent     → 设置里程碑（每25章一个）
-d) outline-agent     → 规划伏笔分布
-e) outline-agent     → 设计角色弧光
-f) outline-agent     → 输出卷纲
-g) world-agent       → 同步本卷伏笔到 threads.json
+a) 调用 subagent（outline-agent）     → 获取总纲中的本卷规划
+b) 调用 subagent（outline-agent）     → 确定本卷主题和范围
+c) 调用 subagent（outline-agent）     → 设置里程碑（每25章一个）
+d) 调用 subagent（outline-agent）     → 规划伏笔分布
+e) 调用 subagent（outline-agent）     → 设计角色弧光
+f) 调用 subagent（outline-agent）     → 输出卷纲
+g) 调用 subagent（world-agent）       → 同步本卷伏笔到 threads.json
 ```
 
 ### 卷纲模板
@@ -141,14 +139,14 @@ character_arcs: []
 ### 流程步骤（单批次5-10章）
 
 ```
-a) outline-agent     → 获取下一批次章号
-b) outline-agent     → 获取待植入伏笔列表
-c) outline-agent     → 编写本章纲（每章单独输出）
-d) outline-agent     → 质量自检（逐章检查）
-e) plot-agent        → 一致性校验
-f) outline-agent     → 修复问题（如有）
-g) world-agent       → 同步伏笔到 threads.json
-h) outline-agent     → 输出检查报告
+a) 调用 subagent（outline-agent）     → 获取下一批次章号
+b) 调用 subagent（outline-agent）     → 获取待植入伏笔列表
+c) 调用 subagent（outline-agent）     → 编写本章纲（每章单独输出）
+d) 调用 subagent（outline-agent）     → 质量自检（逐章检查）
+e) 调用 subagent（plot-agent）        → 一致性校验
+f) 调用 subagent（outline-agent）     → 修复问题（如有）
+g) 调用 subagent（world-agent）       → 同步伏笔到 threads.json
+h) 调用 subagent（outline-agent）     → 输出检查报告
 ```
 
 ### 章纲模板
@@ -216,7 +214,7 @@ hooks_planted:
 ### 质量检查（每批次）
 
 ```
-outline-agent 自检：
+subagent（outline-agent）自检：
 ├── 单句概要 ≤ 20字
 ├── 三个关键事件覆盖情节点
 ├── 场景数 ≤ 4个
@@ -224,7 +222,7 @@ outline-agent 自检：
 ├── 伏笔植入位置明确
 └── 结尾钩子类型正确
 
-plot-agent 校验：
+subagent（plot-agent）校验：
 ├── 与上一章衔接正确
 ├── 与总纲/卷纲一致
 ├── 伏笔跨度 ≤ 150章
@@ -315,9 +313,9 @@ W ≥ 20 → 必须排期回收
 | 紧张度 | 1-10 | 自检 |
 | 伏笔植入 | 每章0-2个新伏笔 | 自检 |
 | 结尾钩子 | 必须有，类型正确 | 自检 |
-| 伏笔跨度 | ≤150章 | plot-agent |
-| 章节衔接 | 承接上一章 | plot-agent |
-| 逻辑一致 | 无矛盾 | plot-agent |
+| 伏笔跨度 | ≤150章 | subagent（plot-agent） |
+| 章节衔接 | 承接上一章 | subagent（plot-agent） |
+| 逻辑一致 | 无矛盾 | subagent（plot-agent） |
 
 ### 检查报告模板
 
@@ -365,13 +363,13 @@ summary:
 1. 总纲生成（一次性）
 2. 卷纲生成（每卷一次）
 3. 章纲生成（每批5-10章）
-   ├── a) outline-agent 获取待生成章节
-   ├── b) outline-agent 获取伏笔列表
-   ├── c) outline-agent 逐章编写章纲
-   ├── d) outline-agent 逐章自检
-   ├── e) plot-agent 一致性校验
+   ├── a) 调用 subagent（outline-agent）获取待生成章节
+   ├── b) 调用 subagent（outline-agent）获取伏笔列表
+   ├── c) 调用 subagent（outline-agent）逐章编写章纲
+   ├── d) 调用 subagent（outline-agent）逐章自检
+   ├── e) 调用 subagent（plot-agent）一致性校验
    ├── f) 修复问题（如有）
-   ├── g) world-agent 同步伏笔
+   ├── g) 调用 subagent（world-agent）同步伏笔
    └── h) 输出检查报告
 
 质量原则：

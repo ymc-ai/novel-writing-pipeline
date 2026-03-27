@@ -5,32 +5,30 @@ description: |
   用户说"写第X章"、"创作章节"时使用。
 ---
 
----
-
 # 单章创作流程
 
 ## 输入
 
 - 章节编号：chapter_id
-- 章节大纲：从 outline-agent 获取
-- 世界状态：从 world-agent 获取
+- 章节大纲：调用 subagent（outline-agent）获取
+- 世界状态：调用 subagent（world-agent）获取
 
 ## 流程
 
 ### Step 1: 准备
 
 ```
-a) 使用 world-agent
+a) 调用 subagent（world-agent）
    → 获取当前世界状态
    → 获取上一章结尾情节点（previous_chapter_ending）**必须获取**
    → 获取活跃伏笔列表
    → 获取相关角色状态
 
-b) 使用 outline-agent
+b) 调用 subagent（outline-agent）
    → 获取章纲
    → 获取待触发伏笔节点
 
-c) 使用 quality-agent
+c) 调用 subagent（quality-agent）
    → 获取当前节奏模式
    → 获取修辞阶段要求
    → 获取禁用词表
@@ -39,7 +37,7 @@ c) 使用 quality-agent
 ### Step 2: 创作
 
 ```
-使用 chapter-agent 创作章节：
+调用 subagent（chapter-agent）创作章节：
 
 输入：
 - chapter_id
@@ -63,12 +61,12 @@ c) 使用 quality-agent
 ### Step 3: 检查
 
 ```
-a) 使用 plot-agent 校验
+a) 调用 subagent（plot-agent）校验
    → 世界一致性
    → 伏笔合规性
    → 逻辑自洽
 
-b) 使用 quality-agent 检查
+b) 调用 subagent（quality-agent）检查
    → 节奏评估
    → 禁用词检查
 ```
@@ -76,7 +74,7 @@ b) 使用 quality-agent 检查
 ### Step 4: 润色
 
 ```
-使用 polish-agent 润色：
+调用 subagent（polish-agent）润色：
 → 消除AI味
 → 统一风格
 → 增强表现力
@@ -86,11 +84,11 @@ b) 使用 quality-agent 检查
 
 ```
 a) 保存章节到 data/chapters/chapter_{id}.md
-b) 使用 world-agent 更新状态
+b) 调用 subagent（world-agent）更新状态
    → 更新 delta_log
    → 更新伏笔状态
    → 更新 L1_Endings（记录本章结尾情节点）
-c) 更新 outline-agent 的章纲状态
+c) 调用 subagent（outline-agent）更新章纲状态
 ```
 
 ## 输出

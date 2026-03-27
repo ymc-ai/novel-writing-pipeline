@@ -5,14 +5,12 @@ description: |
   用户说"写小说"、"开始创作"、"创建新项目"时使用。
 ---
 
----
-
 # 完整创作流程
 
 ## 阶段一：初始化项目
 
 ```
-1. 使用 world-agent 初始化项目
+1. 调用 subagent（world-agent）初始化项目
    → 创建 data/world/world.json
    → 创建 data/threads/threads.json
    → 设置项目配置（标题、题材、目标章节）
@@ -21,7 +19,7 @@ description: |
 ## 阶段二：角色设定
 
 ```
-2. 使用 character-agent 创建角色
+2. 调用 subagent（character-agent）创建角色
    → 主角（必须有致命缺陷）
    → 核心配角
    → 反派（合理动机）
@@ -31,7 +29,7 @@ description: |
 ## 阶段三：构建世界
 
 ```
-3. 使用 world-agent 构建世界
+3. 调用 subagent（world-agent）构建世界
    → 确定修炼体系
    → 确定势力分布
    → 确定关键道具
@@ -41,24 +39,24 @@ description: |
 ## 阶段四：生成大纲
 
 ```
-4. 使用 outline-writing skill 生成大纲
+4. 调用 skill（outline-writing）生成大纲
 
-   a) outline-agent 生成总纲
+   a) 调用 subagent（outline-agent）生成总纲
       → 三幕结构（建置/对抗/解决）
       → 核心主题定义
       → 节奏规划
 
-   b) outline-agent 生成卷纲
+   b) 调用 subagent（outline-agent）生成卷纲
       → 每卷50-100章
       → 里程碑设置（每25章）
       → 伏笔分布规划
 
-   c) outline-agent 批量生成章纲
+   c) 调用 subagent（outline-agent）批量生成章纲
       → 完整章纲（每50章一批）
       → 伏笔植入计划
       → 钩子设计
 
-   d) world-agent 同步伏笔
+   d) 调用 subagent（world-agent）同步伏笔
       → 伏笔写入 data/threads/threads.json
       → 设置优先级和回收计划
 ```
@@ -68,28 +66,28 @@ description: |
 ```
 5. 对每章执行：
    
-   a) 使用 outline-agent 获取章纲
-   b) 使用 world-agent 获取世界状态
-   c) 使用 quality-agent 确认质量要求
-   d) 使用 chapter-agent 创作章节
-   e) 使用 plot-agent 校验一致性
-   f) 使用 polish-agent 润色
-   g) 使用 outline-agent 更新章纲状态（标记完成）
-   h) 使用 world-agent 更新状态（delta_log + 伏笔）
+   a) 调用 subagent（outline-agent）获取章纲
+   b) 调用 subagent（world-agent）获取世界状态
+   c) 调用 subagent（quality-agent）确认质量要求
+   d) 调用 subagent（chapter-agent）创作章节
+   e) 调用 subagent（plot-agent）校验一致性
+   f) 调用 subagent（polish-agent）润色
+   g) 调用 subagent（outline-agent）更新章纲状态（标记完成）
+   h) 调用 subagent（world-agent）更新状态（delta_log + 伏笔）
 ```
 
 ## 阶段六：质量控制
 
 ```
 6. 每10章进行一次全面检查
-   → quality-agent 节奏评估
-   → plot-agent 一致性校验
-   → world-agent 伏笔整理
+   → 调用 subagent（quality-agent）节奏评估
+   → 调用 subagent（plot-agent）一致性校验
+   → 调用 subagent（world-agent）伏笔整理
 ```
 
 ## 伏笔管理
 
-- 添加伏笔：使用 world-agent 记录
+- 添加伏笔：调用 subagent（world-agent）记录
 - 伏笔跨度：≤ 150章
 - 必须回收：W = P × T ≥ 20
 
